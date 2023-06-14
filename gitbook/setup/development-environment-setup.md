@@ -39,13 +39,14 @@ The wizard will prompt for a few questions, answers are as follows:
 Let's replace `npm` with `yarn` for faster iteration:
 
 ```bash
+cd tzombies
 npm install --global yarn
 rm package-lock.json
 yarn install
 ```
 
 {% hint style="info" %}
-Some depedencies have issues with Next.js being executed on both the server and the client. To solve potential warnings, let's add this in the `nextConfig` object in `next.config.js`
+Some dependencies have issues with Next.js being executed on both the server and the client. To solve potential warnings, let's add this in the `nextConfig` object in `next.config.js`
 
 
 
@@ -60,7 +61,7 @@ webpack: (config, { isServer }) => {
 {% endhint %}
 
 {% hint style="info" %}
-An [issue](https://github.com/ecadlabs/taquito/issues/2491) with Next and Taquito prevent the production build from working properly. While this issue is being fixed, a solution is to disable the `swc`minifier for prodution:&#x20;
+An [issue](https://github.com/ecadlabs/taquito/issues/2491) with Next and Taquito prevent the production build from working properly. While this issue is being fixed, a solution is to disable the `swc` minifier for prodution:&#x20;
 
 In `next.config.js`, set&#x20;
 
@@ -77,7 +78,7 @@ yarn dev
 
 It will automatically reload after editing files. Note that some changes (such as installing a package) still require restarting the server.&#x20;
 
-To build for production
+To build for production:
 
 ```bash
 yarn build
@@ -113,7 +114,7 @@ yarn add --dev @completium/completium-cli@0.4.77
 yarn add @completium/dapp-ts@0.1.11
 ```
 
-Completium CLI is a command-line interface that we'll use to build, deploy and interact with our smart contracts. It relies on `octez-client` which need to be installed separately.&#x20;
+Completium CLI is a command-line interface that we'll use to build, deploy and interact with our smart contracts. It relies on `octez-client` which will need to be installed separately.&#x20;
 
 Smart contract interaction in your app will rely on taquito and Beacon:
 
@@ -126,7 +127,7 @@ yarn add @taquito/michel-codec@16.1.2 @taquito/michelson-encoder@16.1.2 @taquito
 
 ### Extras
 
-I recommend using a prettier and set it up with your IDE to keep a clean and coherent code base:&#x20;
+I recommend using prettier with your IDE to maintain a clean and coherent code base:&#x20;
 
 ```bash
 yarn add --dev prettier@2.7.1

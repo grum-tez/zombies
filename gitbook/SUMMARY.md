@@ -2,7 +2,7 @@
 
 ## ℹ Introduction
 
-* [What is TZombies?](README.md)
+* [The TZombies Tutorial](README.md)
 * [Architecture](introduction/architecture.md)
 
 ## 🛠 Setup
