@@ -14,7 +14,7 @@ Make sure you are on the `mockup` or `sandbox` endpoint, and run the `deploy` co
 
 ```bash
 ccli switch endpoint # select sandbox (if running) or mockup
-ccli swtich account # select alice (tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb)
+ccli switch account # select alice (tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb)
 ccli deploy contracts/permits.arl --parameters '{"owner": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb"}'
 ```
 

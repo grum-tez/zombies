@@ -11,16 +11,20 @@ The archetype-lang developers published some [templates for common or standardis
 We'll use the [`fa2_multi`](https://github.com/completium/archetype-fa2/blob/main/contracts/fa2\_multi.arl) base that we'll adjust according to our needs.
 
 {% hint style="info" %}
-The completium team has made a [comprehensive documentation](https://archetype-lang.org/docs/templates/fa2/) on the FA2 template and the archetype language. I recommend taking some time to read and understand the contract logic before moving on.&#x20;
+The completium team maintains [comprehensive documentation](https://archetype-lang.org/docs/templates/fa2/) on the FA2 template and the archetype language. I recommend taking some time to read and understand the contract logic before moving on.&#x20;
 {% endhint %}
 
-Create a `contracts` folder in your repository, and download `permits.arl` and `fa2_multi.arl` in there.&#x20;
+Copy `permits.arl` and `fa2_multi.arl` into a 'contracts' folder in your repository.&#x20;
 
 The main logic is in `fa2_multi`, whereas the `permits` contract implements special features for the NFT (such as transfer with a permit, that allows the owner to sign a message to allow another account or contract to transfer its NFT). &#x20;
 
 ## Adjustments
 
-We'll do the following changes to the FA2 template
+We will make the following changes to the FA2 template to suit our project:
+- Rename the contract
+- Remove token metadata initialisation
+- Remove permits update
+- Customise the mint function
 
 ### Rename the contract
 
