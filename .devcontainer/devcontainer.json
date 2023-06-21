@@ -8,6 +8,6 @@
     "ghcr.io/grum-tez/features_template/octez-client-installer:1": {}
   },
   "forwardPorts": [3000, 20000],
-  "postCreateCommand": "chmod +x .devcontainer/postCreate.sh && .devcontainer/postCreate.sh",
-  "postStartCommand": "alias ccli=\"npx completium-cli\""
+  "postCreateCommand": "chmod +x .devcontainer/postCreate.sh && .devcontainer/postCreate.sh"
 }
+
