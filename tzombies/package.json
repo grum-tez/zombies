@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "npx ts-mocha tests/deployAndTest.ts --timeout 0 --bail"
   },
   "dependencies": {
     "@completium/dapp-ts": "0.1.11",
@@ -24,7 +25,7 @@
     "@taquito/signer": "16.1.2",
     "@taquito/taquito": "16.1.2",
     "@taquito/utils": "16.1.2",
-    "@types/node": "20.4.0",
+    "@types/node": "20.2.3",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@wert-io/widget-initializer": "^4.0.0",
@@ -39,7 +40,11 @@
   },
   "devDependencies": {
     "@completium/completium-cli": "0.4.77",
+    "@completium/experiment-ts": "0.1.13",
     "@types/luxon": "3.3.0",
-    "prettier": "2.7.1"
+    "@types/mocha": "9.1.1",
+    "mocha": "^10.2.0",
+    "prettier": "2.7.1",
+    "ts-mocha": "10.0.0"
   }
 }
