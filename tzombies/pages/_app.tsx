@@ -5,7 +5,7 @@ import Container from '@mui/material/Container'
 import { useMemo } from 'react'
 import NavBar from '../components/NavBar'
 import type { AppProps } from 'next/app'
-// import { WalletProvider } from '../components/providers/WalletProvider'
+import { WalletProvider } from '../components/providers/WalletProvider'
 
 export default function App({ Component, pageProps }: AppProps) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
@@ -23,12 +23,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* <WalletProvider> */}
-      <NavBar />
-      <Container sx={{ mt: 12 }}>
-        <Component {...pageProps} />
-      </Container>
-      {/* </WalletProvider> */}
+      <WalletProvider>
+        <NavBar />
+        <Container sx={{ mt: 12 }}>
+          <Component {...pageProps} />
+        </Container>
+      </WalletProvider>
     </ThemeProvider>
   )
 }

@@ -9,8 +9,10 @@ import Box from '@mui/material/Box'
 import { ClickAwayListener } from '@mui/material'
 import { useRouter } from 'next/router'
 import { CloseRounded } from '@mui/icons-material'
+import { useWalletContext } from './providers/WalletProvider'
 
 const Menu = () => {
+  const { connect, disconnect, account } = useWalletContext()
   return (
     <>
       <Link href={'/drops'} style={{ textDecoration: 'none' }}>
@@ -41,9 +43,20 @@ const Menu = () => {
           Inventory
         </Button>
       </Link>
-      <Button sx={{ my: 2, color: 'white' }} onClick={() => {}}>
-        Connect wallet
-      </Button>
+      {account ? (
+        <Button
+          sx={{ my: 2, color: 'white' }}
+          onClick={disconnect}
+          startIcon={<CloseRounded />}
+        >
+          {account.address.substring(0, 5)}...
+          {account.address.substring(account.address.length - 5)}
+        </Button>
+      ) : (
+        <Button sx={{ my: 2, color: 'white' }} onClick={connect}>
+          Connect wallet
+        </Button>
+      )}
     </>
   )
 }
