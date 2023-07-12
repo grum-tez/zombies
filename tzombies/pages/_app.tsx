@@ -8,6 +8,7 @@ import type { AppProps } from 'next/app'
 import { WalletProvider } from '../components/providers/WalletProvider'
 import { MetadataProvider } from 'components/providers/MetadataProvider'
 import { TzombiesProvider } from 'components/providers/TzombiesProvider'
+import { MarketProvider } from 'components/providers/MarketProvider'
 
 export default function App({ Component, pageProps }: AppProps) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
@@ -25,16 +26,18 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <TzombiesProvider>
-        <MetadataProvider>
-          <WalletProvider>
-            <NavBar />
-            <Container sx={{ mt: 12 }}>
-              <Component {...pageProps} />
-            </Container>
-          </WalletProvider>
-        </MetadataProvider>
-      </TzombiesProvider>
+      <MarketProvider>
+        <TzombiesProvider>
+          <MetadataProvider>
+            <WalletProvider>
+              <NavBar />
+              <Container sx={{ mt: 12 }}>
+                <Component {...pageProps} />
+              </Container>
+            </WalletProvider>
+          </MetadataProvider>
+        </TzombiesProvider>
+      </MarketProvider>
     </ThemeProvider>
   )
 }
