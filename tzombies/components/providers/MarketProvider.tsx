@@ -74,6 +74,7 @@ const MarketProvider = ({ children }: { children: React.ReactNode }) => {
     if (!account || !fa2) {
       setIsApproved(false)
       return
+    } else {
     }
     const arg = new operator_for_all_key(
       new Address(process.env.NEXT_PUBLIC_MARKET_ADDRESS!),

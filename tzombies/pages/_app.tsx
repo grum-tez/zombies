@@ -26,18 +26,18 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MarketProvider>
+      <WalletProvider>
         <MetadataProvider>
           <TzombiesProvider>
-            <WalletProvider>
+            <MarketProvider>
               <NavBar />
               <Container sx={{ mt: 12 }}>
                 <Component {...pageProps} />
               </Container>
-            </WalletProvider>
+            </MarketProvider>
           </TzombiesProvider>
         </MetadataProvider>
-      </MarketProvider>
+      </WalletProvider>
     </ThemeProvider>
   )
 }

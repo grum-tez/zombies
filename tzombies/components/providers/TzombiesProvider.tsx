@@ -16,7 +16,6 @@ interface TransferParameters {
   tokenId: number
   amount: number
 }
-
 interface TzombiesContextProps {
   fa2?: Tzombies
   tokenInfo: Map<number, ZombieMetadata>
@@ -52,6 +51,69 @@ const TzombiesProvider = ({ children }: { children: React.ReactNode }) => {
   >(new Map())
   const [inventory, setInventory] = useState<UserInventory>(new Map())
 
+  const fetchFa2Balance = useCallback(
+    async (address: Address) => {
+      if (!fa2 || registeredTokenInfo.size < 1) {
+        return new Map()
+      }
+      const inventory = new Map()
+      console.log('registeredTokenInfo: ', registeredTokenInfo)
+      for (const [id, _] of registeredTokenInfo) {
+        try {
+          const value = await fa2.get_ledger_value(
+            new ledger_key(address, new Nat(id))
+          )
+
+          inventory.set(id, value?.to_number() ?? 0)
+        } catch (e) {
+          console.error(e)
+        }
+      }
+      return inventory
+    },
+    [fa2, registeredTokenInfo]
+  )
+
+  const fetchInventory = useCallback(async () => {
+    if (!account) {
+      setInventory(new Map())
+      return
+    }
+    setInventory(await fetchFa2Balance(new Address(account.address)))
+    getBalance()
+  }, [account, fetchFa2Balance, getBalance])
+
+  const transfer = useCallback(
+    async (params: TransferParameters) => {
+      if (!fa2 || !account) {
+        return
+      }
+      const dest = new transfer_destination(
+        new Address(params.to),
+        new Nat(params.tokenId),
+        new Nat(params.amount)
+      )
+      const args = new transfer_param(new Address(account.address), [dest])
+      return await fa2.transfer([args], {})
+    },
+    [account, fa2]
+  )
+
+  const freeClaim = useCallback(
+    async (id: number) => {
+      if (!fa2 || !account || !account.address) {
+        return
+      }
+      return await fa2.mint(
+        new Address(account.address),
+        new Nat(id),
+        new Nat(1),
+        {}
+      )
+    },
+    [fa2, account]
+  )
+
   useEffect(() => {
     if (!Tezos) {
       return
@@ -84,70 +146,9 @@ const TzombiesProvider = ({ children }: { children: React.ReactNode }) => {
     fetchRegisteredTokens()
   }, [fa2, fetchMetadata])
 
-  const fetchFa2Balance = useCallback(
-    async (address: Address) => {
-      if (!fa2 || registeredTokenInfo.size < 1) {
-        return new Map()
-      }
-      const inventory = new Map()
-      for (const [id, _] of registeredTokenInfo) {
-        try {
-          const value = await fa2.get_ledger_value(
-            new ledger_key(address, new Nat(id))
-          )
-          inventory.set(id, value?.to_number() ?? 0)
-        } catch (e) {
-          console.error(e)
-        }
-      }
-      return inventory
-    },
-    [fa2, registeredTokenInfo]
-  )
-
-  const fetchInventory = useCallback(async () => {
-    if (!account) {
-      setInventory(new Map())
-      return
-    }
-    setInventory(await fetchFa2Balance(new Address(account.address)))
-    getBalance()
-  }, [account, fetchFa2Balance, getBalance])
-
   useEffect(() => {
     fetchInventory()
   }, [fetchInventory])
-
-  const freeClaim = useCallback(
-    async (id: number) => {
-      if (!fa2 || !account || !account.address) {
-        return
-      }
-      return await fa2.mint(
-        new Address(account.address),
-        new Nat(id),
-        new Nat(1),
-        {}
-      )
-    },
-    [fa2, account]
-  )
-
-  const transfer = useCallback(
-    async (params: TransferParameters) => {
-      if (!fa2 || !account) {
-        return
-      }
-      const dest = new transfer_destination(
-        new Address(params.to),
-        new Nat(params.tokenId),
-        new Nat(params.amount)
-      )
-      const args = new transfer_param(new Address(account.address), [dest])
-      return await fa2.transfer([args], {})
-    },
-    [account, fa2]
-  )
 
   const value = useMemo(
     () => ({
