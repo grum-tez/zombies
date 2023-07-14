@@ -5,6 +5,7 @@ import { Alert, Button, Snackbar, Typography } from '@mui/material'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import RedeemIcon from '@mui/icons-material/Redeem'
 import { useTzombiesContext } from '../components/providers/TzombiesProvider'
+import { useWertContext } from '../components/providers/WertProvider'
 
 const Drops = () => {
   const Extra = useCallback(() => <></>, [])
@@ -12,6 +13,8 @@ const Drops = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>()
   const { freeClaim, fetchInventory, tokenInfo } = useTzombiesContext()
+
+  const { checkout } = useWertContext()
 
   const handleClaim = useCallback(
     async (id: number) => {
@@ -30,13 +33,28 @@ const Drops = () => {
     [freeClaim, fetchInventory]
   )
 
+  const handlePurchase = useCallback(
+    async (id: number) => {
+      setLoading(true)
+      try {
+        await checkout(id)
+      } catch (e: any) {
+        console.error(e)
+        setError(e.message ?? JSON.stringify(e))
+      } finally {
+        setLoading(false)
+      }
+    },
+    [checkout]
+  )
+
   const ClaimButton = useCallback(
     (id: number) => (
       <>
         {id === 1 ? (
           <Button
             disabled={loading}
-            onClick={() => {}}
+            onClick={() => handlePurchase(id)}
             startIcon={<AddShoppingCartIcon />}
           >
             {loading ? 'In progress...' : 'Buy for 2ꜩ'}
@@ -52,7 +70,7 @@ const Drops = () => {
         )}
       </>
     ),
-    [handleClaim, loading]
+    [handleClaim, handlePurchase, loading]
   )
 
   return (

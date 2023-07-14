@@ -5,10 +5,13 @@ import Container from '@mui/material/Container'
 import { useMemo } from 'react'
 import NavBar from '../components/NavBar'
 import type { AppProps } from 'next/app'
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
+import { LocalizationProvider } from '@mui/x-date-pickers'
 import { WalletProvider } from '../components/providers/WalletProvider'
 import { MetadataProvider } from 'components/providers/MetadataProvider'
 import { TzombiesProvider } from 'components/providers/TzombiesProvider'
 import { MarketProvider } from 'components/providers/MarketProvider'
+import { WertProvider } from 'components/providers/WertProvider'
 
 export default function App({ Component, pageProps }: AppProps) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
@@ -30,10 +33,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <MetadataProvider>
           <TzombiesProvider>
             <MarketProvider>
-              <NavBar />
-              <Container sx={{ mt: 12 }}>
-                <Component {...pageProps} />
-              </Container>
+              <WertProvider>
+                <LocalizationProvider dateAdapter={AdapterLuxon}>
+                  <NavBar />
+                  <Container sx={{ mt: 12 }}>
+                    <Component {...pageProps} />
+                  </Container>
+                </LocalizationProvider>
+              </WertProvider>
             </MarketProvider>
           </TzombiesProvider>
         </MetadataProvider>

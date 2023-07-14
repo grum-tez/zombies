@@ -14,6 +14,14 @@ const nextConfig = {
       destination: 'http://localhost:20000/:path*',
     },
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cloudflare-ipfs.com',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig
